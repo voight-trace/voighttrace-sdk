@@ -1,0 +1,28 @@
+{
+  "name": "@voight-trace/voighttrace-sdk",
+  "version": "1.0.0",
+  "description": "Official Voight Trace SDK Collector — AI Traffic Intelligence & GEO Observability",
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "type": "module",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "voight-trace",
+    "ai-agents",
+    "bot-detection",
+    "llm-crawler",
+    "geo",
+    "chatgpt",
+    "claude",
+    "perplexity",
+    "observability"
+  ],
+  "author": "Voight Trace Core Team",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
