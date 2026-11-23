@@ -17,16 +17,27 @@ import crypto from 'node:crypto';
  * are extracted. All others are completely filtered out at the collector level.
  */
 export const SAFE_AUDIT_HEADERS = Object.freeze([
+  // Core AI & Traffic Identification (Required for bot classification & GEO referrals)
+  'user-agent',
+  'referer',
+  'host',
+  'origin',
+
+  // Content Negotiation
   'accept',
   'accept-encoding',
   'accept-language',
   'content-type',
+
+  // Client Hints (Browser & Device Architecture)
   'sec-ch-ua',
   'sec-ch-ua-mobile',
   'sec-ch-ua-platform',
   'sec-ch-ua-platform-version',
   'sec-ch-ua-model',
   'sec-ch-ua-arch',
+
+  // Request & Fetch Context
   'sec-fetch-dest',
   'sec-fetch-mode',
   'sec-fetch-site',

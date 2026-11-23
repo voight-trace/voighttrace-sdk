@@ -210,6 +210,7 @@ Any request header capable of carrying private credentials or personally identif
 
 ### ✅ Permitted Headers (`SAFE_AUDIT_HEADERS`)
 Only standardized, technical context headers strictly required for AI crawler classification, browser architecture detection, and content negotiation are extracted:
+* **Core AI & Traffic Identification:** `user-agent` (identifies AI crawlers & LLM agents), `referer` (detects human referrals from ChatGPT, Claude, Perplexity), `host`, `origin`
 * **Content Negotiation:** `accept`, `accept-encoding`, `accept-language`, `content-type`
 * **Client Hints (Browser Architecture & Device Detection):** `sec-ch-ua`, `sec-ch-ua-mobile`, `sec-ch-ua-platform`, `sec-ch-ua-platform-version`, `sec-ch-ua-model`, `sec-ch-ua-arch`
 * **Browser Request Metadata:** `sec-fetch-dest`, `sec-fetch-mode`, `sec-fetch-site`, `sec-fetch-user`
