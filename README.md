@@ -186,7 +186,7 @@ app.listen(3000);
 | `apiKey` | `string` | `process.env.VOIGHT_TRACE_API_KEY` | **Required.** Secret Ingestion Key (`vt_live_...` or `vt_test_...`). |
 | `siteId` | `string` | `process.env.VOIGHT_TRACE_SITE_ID` | **Required.** Site ID registered in the Voight dashboard. |
 | `tenantId` | `string` | `siteId` | Optional tenant UUID. |
-| `ingestUrl` | `string` | `https://api.voighttrace.com/api/v1/ingestion/events` | Custom Ingestion API URL. |
+| `ingestUrl` | `string` | `https://voighttrace.vercel.app/api/v1/ingestion/events` | Custom Ingestion API URL. |
 | `batchSize` | `number` | `20` | Max events before triggering an immediate flush. |
 | `flushIntervalMs` | `number` | `3000` | Timer interval to flush queued events. |
 | `sampleRate` | `number` | `1.0` | Sampling rate between `0.0` (0%) and `1.0` (100%). |

@@ -101,7 +101,7 @@ export class VoightTraceCollector {
     this.siteId = config.siteId || process.env.VOIGHT_TRACE_SITE_ID || '';
     this.tenantId = config.tenantId || process.env.VOIGHT_TRACE_TENANT_ID || this.siteId || 'default_tenant';
     this.collectorId = config.collectorId || process.env.VOIGHT_TRACE_COLLECTOR_ID || `collector_${crypto.randomUUID().slice(0, 8)}`;
-    this.ingestUrl = config.ingestUrl || process.env.VOIGHT_TRACE_INGEST_URL || 'https://api.voighttrace.com/api/v1/ingestion/events';
+    this.ingestUrl = config.ingestUrl || process.env.VOIGHT_TRACE_INGEST_URL || 'https://voighttrace.vercel.app/api/v1/ingestion/events';
     this.batchSize = Number(config.batchSize || 20);
     this.flushIntervalMs = Number(config.flushIntervalMs || 3000);
     this.sampleRate = typeof config.sampleRate === 'number' ? config.sampleRate : 1.0;

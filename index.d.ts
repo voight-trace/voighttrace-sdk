@@ -31,7 +31,7 @@ export interface VoightTraceConfig {
   collectorId?: string;
 
   /**
-   * Ingestion endpoint URL (defaults to https://api.voighttrace.com/api/v1/ingestion/events)
+   * Ingestion endpoint URL (defaults to https://voighttrace.vercel.app/api/v1/ingestion/events)
    */
   ingestUrl?: string;
 
