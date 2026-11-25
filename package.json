@@ -1,6 +1,6 @@
 {
   "name": "@voight-trace/voighttrace-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Official Voight Trace SDK Collector — AI Traffic Intelligence & GEO Observability",
   "main": "index.js",
   "module": "index.js",
