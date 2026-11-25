@@ -1,4 +1,18 @@
-import crypto from 'node:crypto';
+// Universal UUID and crypto generator (Node, Browser, Cloudflare Edge, Next.js Edge Runtime)
+const getCrypto = () => {
+  if (typeof globalThis !== 'undefined' && globalThis.crypto?.randomUUID) {
+    return globalThis.crypto;
+  }
+  return {
+    randomUUID: () =>
+      'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        const r = (Math.random() * 16) | 0;
+        const v = c === 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      })
+  };
+};
+const crypto = getCrypto();
 
 /**
  * ============================================================================
@@ -101,7 +115,11 @@ export class VoightTraceCollector {
     this.siteId = config.siteId || process.env.VOIGHT_TRACE_SITE_ID || '';
     this.tenantId = config.tenantId || process.env.VOIGHT_TRACE_TENANT_ID || this.siteId || 'default_tenant';
     this.collectorId = config.collectorId || process.env.VOIGHT_TRACE_COLLECTOR_ID || `collector_${crypto.randomUUID().slice(0, 8)}`;
-    this.ingestUrl = config.ingestUrl || process.env.VOIGHT_TRACE_INGEST_URL || 'https://voighttrace.vercel.app/api/v1/ingestion/events';
+    let rawIngestUrl = config.ingestUrl || process.env.VOIGHT_TRACE_INGEST_URL || 'https://voighttrace.vercel.app/api/v1/ingestion/events';
+    if (rawIngestUrl.includes('api.voighttrace.com')) {
+      rawIngestUrl = 'https://voighttrace.vercel.app/api/v1/ingestion/events';
+    }
+    this.ingestUrl = rawIngestUrl;
     this.batchSize = Number(config.batchSize || 20);
     this.flushIntervalMs = Number(config.flushIntervalMs || 3000);
     this.sampleRate = typeof config.sampleRate === 'number' ? config.sampleRate : 1.0;
@@ -381,6 +399,12 @@ export class VoightTraceCollector {
           };
 
           this.enqueue(payload);
+
+          // In Next.js Edge/Serverless environments, dispatch immediately via event.waitUntil
+          // to prevent the lambda from freezing before background telemetry finishes (RNF-012)
+          if (event && typeof event.waitUntil === 'function') {
+            event.waitUntil(this.flush());
+          }
         } catch (err) {
           if (this.debug) console.error('[Voight Trace Next.js Error]', err);
         }
@@ -514,6 +538,11 @@ export class VoightTraceCollector {
           };
 
           this.enqueue(payload);
+
+          // Support Cloudflare Workers / Hono edge executionCtx.waitUntil
+          if (c.executionCtx && typeof c.executionCtx.waitUntil === 'function') {
+            c.executionCtx.waitUntil(this.flush());
+          }
         } catch (err) {
           if (this.debug) console.error('[Voight Trace Hono Error]', err);
         }
